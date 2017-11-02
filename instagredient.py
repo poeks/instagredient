@@ -1,13 +1,32 @@
-from flask import Flask
+from env import CONFIG
+from flask import Flask, request, redirect
+
+
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
     return "Hello World!"
 
+
 @app.route("/callback")
 def callback():
-    return "Callback"
+    if request.args.get('code'):
+        access_url = CONFIG.get('wunderlist', 'auth_access_url')
+        code = request.args.get('code')
+        r = requests.post(access_url, code=code)
+
+        return r.json()
+
+    else:
+        client_id = CONFIG.get('wunderlist', 'client_id')
+        redirect_url = CONFIG.get('wunderlist', 'app_callback_url')
+        state = CONFIG.get('wunderlist', 'state')
+        auth_url = CONFIG.get('wunderlist', 'auth_url')
+        url = "{}?client_id={}&redirect_uri={}&state={}".format(auth_url, client_id, redirect_url, state)
+
+        return redirect(url)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

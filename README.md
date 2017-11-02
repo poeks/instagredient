@@ -11,8 +11,12 @@ https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications
 
 #### Configure
 
-* Copy .config.yml.sample to .config.yml
+* Copy config.ini.sample to config.ini
 * Create Wunderlist app
-* Edit .config.yml to reflect wunderlist app config
+* Edit config.ini to reflect wunderlist app config
+
+#### Run locally
+
+`FLASK_APP=instagredient.py flask run`
 
 ### Client
