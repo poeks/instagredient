@@ -1,2 +1,2 @@
-def testFail():
-    assert False
+def testSucceed():
+    assert True
