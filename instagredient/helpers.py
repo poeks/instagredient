@@ -9,7 +9,7 @@ def read_config(config_file="./config.cfg"):
 
 def token(session, from_url):
     name = 'access_token'
-    if session.get(name):
+    if session.get(name) && session.get(name) != '':
         return session.get(name)
     else:
         return redirect('/callback?redirect_url={}'.format(from_url))
