@@ -2,3 +2,4 @@ flask
 uwsgi
 pytest
 requests
+flask-session

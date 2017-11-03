@@ -1,14 +1,17 @@
 import requests
 from flask import Flask, request, redirect, session
+from flask_session import Session
 from env import CONFIG
 
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+Session(app)
 
 @app.route("/")
 def hello():
-    if 'access_token' in session:
-        return "Hello {}".format(session['access_token'])
+    if session.get('access_token'):
+        return "Hello {}".format(session.get('access_token'))
     else:
         return "Hello World!"
 
