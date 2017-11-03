@@ -46,6 +46,8 @@ def callback():
 
 if __name__ == "__main__":
     app.secret_key = "yadda yadda wooooo"
+    app.config['SESSION_TYPE'] = 'filesystem'
+
     sess.init_app(app)
     #app.debug = True
     app.run('127.0.0.1')
