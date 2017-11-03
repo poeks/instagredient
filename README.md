@@ -17,6 +17,9 @@ https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications
 
 #### Run locally
 
-`FLASK_APP=instagredient.py flask run`
+```pip install -r requirements.txt
+. venv/bin/activate
+python web.py```
+
 
 ### Client
