@@ -6,7 +6,7 @@ from env import CONFIG
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-Session(app)
+sess = Session()
 
 @app.route("/")
 def hello():
@@ -45,4 +45,7 @@ def callback():
 
 
 if __name__ == "__main__":
+    app.secret_key = "yadda yadda wooooo"
+    sess.init_app(app)
+    #app.debug = True
     app.run('127.0.0.1')
