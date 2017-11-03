@@ -15,8 +15,8 @@ def get_token():
     if session.get(name) and session.get(name) != '':
         token = session.get(name)
     else:
-        if request.url != CONFIG.get('wunderlist', 'app_callback_url'):
-            return redirect('/callback?redirect_url={}'.format(request.url))
+        if request.path != '/callback':
+            return redirect('/callback?redirect_url={}'.format(request.path))
 
 @app.before_request
 def exchange():
@@ -62,7 +62,7 @@ def callback():
     else:
         client_id = CONFIG.get('wunderlist', 'client_id')
         #redirect_url = CONFIG.get('wunderlist', 'app_callback_url')
-        redirect_url = "{}/{}".format(CONFIG.get('wunderlist', 'app_url'), request.args.get('redirect_url'))
+        redirect_url = "{}{}".format(CONFIG.get('wunderlist', 'app_url'), request.args.get('redirect_url'))
         state = CONFIG.get('wunderlist', 'state')
         auth_url = CONFIG.get('wunderlist', 'auth_url')
         url = "{}?client_id={}&redirect_uri={}&state={}".format(auth_url, client_id, redirect_url, state)
