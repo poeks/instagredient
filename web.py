@@ -10,6 +10,11 @@ app.secret_key = "yadda yadda wooooo"
 sess = Session()
 
 @app.before_request
+def exchange():
+    if request.args.get('code'):
+        helpers.exchange_code(request, session)
+
+@app.before_request
 def get_token():
     name = 'access_token'
     if session.get(name) and session.get(name) != '':
@@ -17,11 +22,6 @@ def get_token():
     else:
         if request.path != '/callback':
             return redirect('/callback?redirect_url={}'.format(request.path))
-
-@app.before_request
-def exchange():
-    if request.args.get('code'):
-        helpers.exchange_code(request, session)
 
 @app.route("/")
 def hello():
