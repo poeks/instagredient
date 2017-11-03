@@ -12,7 +12,7 @@ https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications
 #### Configure
 
 * Copy config.ini.sample to config.ini
-* Create Wunderlist app
+* Create Wunderlist app: https://developer.wunderlist.com
 * Edit config.ini to reflect wunderlist app config
 
 #### Run locally
