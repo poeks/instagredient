@@ -47,7 +47,7 @@ def clear():
 
 @app.route("/test")
 def test():
-    return "token is {}".format(token)
+    return "token is {}".format(session.get('access_token'))
 
 @app.route("/callback")
 def callback():
