@@ -17,6 +17,7 @@ def hello():
         return "Hello World!"
 
 @app.route("/clearsession")
+def clear():
     session.clear()
     return redirect("/")
 
