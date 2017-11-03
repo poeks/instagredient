@@ -1,18 +1,13 @@
 import ConfigParser, requests
 from flask import redirect
 
+
 def read_config(config_file="./config.cfg"):
     config = ConfigParser.ConfigParser()
     config.read(config_file)
 
     return config
 
-def token(session, from_url):
-    name = 'access_token'
-    if session.get(name) and session.get(name) != '':
-        return session.get(name)
-    else:
-        return redirect('/callback?redirect_url={}'.format(from_url))
 
 def exchange_code(request, session):
 

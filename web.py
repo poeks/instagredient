@@ -9,6 +9,20 @@ app = Flask(__name__)
 app.secret_key = "yadda yadda wooooo"
 sess = Session()
 
+@app.before_request
+def get_token():
+    name = 'access_token'
+    if session.get(name) and session.get(name) != '':
+        token = session.get(name)
+    else:
+        if request.url != CONFIG.get('wunderlist', 'app_callback_url'):
+            return redirect('/callback?redirect_url={}'.format(request.url))
+
+@app.before_request
+def exchange():
+    if request.args.get('code'):
+        helpers.exchange_code(request, session)
+
 @app.route("/")
 def hello():
     if session.get('access_token'):
@@ -23,10 +37,6 @@ def clear():
 
 @app.route("/test")
 def test():
-    if request.args.get('code'):
-        helpers.exchange_code(request, session)
-
-    token = helpers.token(session, 'test')
     return "token is {}".format(token)
 
 @app.route("/callback")
@@ -34,7 +44,8 @@ def callback():
     client_id = CONFIG.get('wunderlist', 'client_id')
 
     if request.args.get('code'):
-        helpers.exchange_code(request, session)
+        pass
+        #helpers.exchange_code(request, session)
         # access_url = CONFIG.get('wunderlist', 'auth_access_url')
         # code = request.args.get('code')
         # client_secret = CONFIG.get('wunderlist', 'client_secret')
@@ -46,7 +57,7 @@ def callback():
         # else:
         #     return "error:{}".format(r.json())
 
-        return redirect("/")
+        #return redirect("/")
 
     else:
         client_id = CONFIG.get('wunderlist', 'client_id')
