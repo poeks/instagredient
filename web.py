@@ -56,6 +56,8 @@ def callback():
 
 @app.route("/add")
 def add():
+    w = Wunderlist(session.get('access_token')
+    w.check_list()
     # check if list exists
     # parse url
     # add items to list

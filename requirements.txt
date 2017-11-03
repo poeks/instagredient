@@ -3,3 +3,5 @@ uwsgi
 pytest
 requests
 flask-session
+awscli
+ingredient-parser
