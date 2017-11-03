@@ -14,6 +14,7 @@ def exchange():
     if request.args.get('code'):
         access_url = CONFIG.get('wunderlist', 'auth_access_url')
         code = request.args.get('code')
+        client_id = CONFIG.get('wunderlist', 'client_id')
         client_secret = CONFIG.get('wunderlist', 'client_secret')
         r = requests.post(access_url, data={'code':code, 'client_id':client_id, 'client_secret':client_secret})
         json_res = r.json()
