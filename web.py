@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, session
 from env import CONFIG
 
 
@@ -7,20 +7,29 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    if 'access_token' in session:
+        return "Hello {}".format(session['access_token'))
+    else:
+        return "Hello World!"
 
 
 @app.route("/callback")
 def callback():
+    client_id = CONFIG.get('wunderlist', 'client_id')
+
     if request.args.get('code'):
         access_url = CONFIG.get('wunderlist', 'auth_access_url')
         code = request.args.get('code')
-        client_id = CONFIG.get('wunderlist', 'client_id')
         client_secret = CONFIG.get('wunderlist', 'client_secret')
         r = requests.post(access_url, data={'code':code, 'client_id':client_id, 'client_secret':client_secret})
+        json_res = r.json()
 
-        app.logger.debug("stuff  {}".format(r.json()))
-	return "success {}".format(r.json())
+        if 'access_token' in json_res:
+            session['access_token'] = json_res['access_token']
+        else:
+            return "error:{}".format(r.json())
+
+        return redirect("/")
 
     else:
         client_id = CONFIG.get('wunderlist', 'client_id')
@@ -31,13 +40,6 @@ def callback():
 
         return redirect(url)
 
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        return "do_the_login"
-    else:
-        return "show_the_login_form"
 
 if __name__ == "__main__":
     app.run('127.0.0.1')
