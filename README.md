@@ -17,7 +17,8 @@ https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications
 
 #### Run locally
 
-```pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
 . venv/bin/activate
 python web.py
 ```
