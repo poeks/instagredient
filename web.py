@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     if 'access_token' in session:
-        return "Hello {}".format(session['access_token'))
+        return "Hello {}".format(session['access_token'])
     else:
         return "Hello World!"
 
