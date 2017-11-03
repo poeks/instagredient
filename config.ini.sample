@@ -1,3 +1,6 @@
+[general]
+app_secret: somerandomstring
+
 [wunderlist]
 client_id: yourclientid
 client_secret: yourclientsecret

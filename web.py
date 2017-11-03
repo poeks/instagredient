@@ -6,7 +6,7 @@ from instagredient import helpers
 
 
 app = Flask(__name__)
-app.secret_key = "yadda yadda wooooo"
+app.secret_key = CONFIG.get('general', 'app_secret')
 sess = Session()
 
 
@@ -43,33 +43,10 @@ def clear():
     session.clear()
     return redirect("/")
 
-@app.route("/test")
-def test():
-    return "token is {}".format(session.get('access_token'))
-
 @app.route("/callback")
 def callback():
-    client_id = CONFIG.get('wunderlist', 'client_id')
-
-    if request.args.get('code'):
-        pass
-        #helpers.exchange_code(request, session)
-        # access_url = CONFIG.get('wunderlist', 'auth_access_url')
-        # code = request.args.get('code')
-        # client_secret = CONFIG.get('wunderlist', 'client_secret')
-        # r = requests.post(access_url, data={'code':code, 'client_id':client_id, 'client_secret':client_secret})
-        # json_res = r.json()
-        #
-        # if 'access_token' in json_res:
-        #     session['access_token'] = json_res['access_token']
-        # else:
-        #     return "error:{}".format(r.json())
-
-        #return redirect("/")
-
-    else:
+    if not request.args.get('code'):
         client_id = CONFIG.get('wunderlist', 'client_id')
-        #redirect_url = CONFIG.get('wunderlist', 'app_callback_url')
         redirect_url = "{}{}".format(CONFIG.get('wunderlist', 'app_url'), request.args.get('redirect_url'))
         state = CONFIG.get('wunderlist', 'state')
         auth_url = CONFIG.get('wunderlist', 'auth_url')
