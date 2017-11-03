@@ -16,6 +16,10 @@ def hello():
     else:
         return "Hello World!"
 
+@app.route("/clearsession")
+    session.clear()
+    return redirect("/")
+
 @app.route("/test")
 def test():
     if request.args.get('code'):
