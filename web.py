@@ -1,5 +1,6 @@
-from env import CONFIG
+import requests
 from flask import Flask, request, redirect
+from env import CONFIG
 
 
 app = Flask(__name__)
