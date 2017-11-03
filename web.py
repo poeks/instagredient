@@ -15,10 +15,12 @@ def callback():
     if request.args.get('code'):
         access_url = CONFIG.get('wunderlist', 'auth_access_url')
         code = request.args.get('code')
-        r = requests.post(access_url, data={'code':code})
+        client_id = CONFIG.get('wunderlist', 'client_id')
+        client_secret = CONFIG.get('wunderlist', 'client_secret')
+        r = requests.post(access_url, data={'code':code, 'client_id':client_id, 'client_secret':client_secret})
 
         app.logger.debug("stuff  {}".format(r.json()))
-	return "success {}".format(r.text)
+	return "success {}".format(r.json())
 
     else:
         client_id = CONFIG.get('wunderlist', 'client_id')
