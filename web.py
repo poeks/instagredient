@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.secret_key = "yadda yadda wooooo"
 sess = Session()
 
+
 @app.before_request
 def exchange():
     if request.args.get('code'):
@@ -22,16 +23,13 @@ def exchange():
         if 'access_token' in json_res:
             session['access_token'] = json_res['access_token']
         else:
-            return "error:{}".format(r.json())
+            return "error:{}".format(json_res)
 
 @app.before_request
 def get_token():
     name = 'access_token'
-    if session.get(name) and session.get(name) != '':
-        token = session.get(name)
-    else:
-        if request.path != '/callback':
-            return redirect('/callback?redirect_url={}'.format(request.path))
+    if (not session.get(name) or session.get(name) == '') and request.path!= '/callback':
+        return redirect('/callback?redirect_url={}'.format(request.path))
 
 @app.route("/")
 def hello():
