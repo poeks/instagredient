@@ -12,7 +12,16 @@ sess = Session()
 @app.before_request
 def exchange():
     if request.args.get('code'):
-        helpers.exchange_code(request, session)
+        access_url = CONFIG.get('wunderlist', 'auth_access_url')
+        code = request.args.get('code')
+        client_secret = CONFIG.get('wunderlist', 'client_secret')
+        r = requests.post(access_url, data={'code':code, 'client_id':client_id, 'client_secret':client_secret})
+        json_res = r.json()
+
+        if 'access_token' in json_res:
+            session['access_token'] = json_res['access_token']
+        else:
+            return "error:{}".format(r.json())
 
 @app.before_request
 def get_token():
