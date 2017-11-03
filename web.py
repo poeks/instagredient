@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, session
 from flask_session import Session
 from env import CONFIG
 from instagredient import helpers
+from instagredient.wunderlist import Wunderlist
 
 
 app = Flask(__name__)
@@ -56,7 +57,7 @@ def callback():
 
 @app.route("/add")
 def add():
-    w = Wunderlist(session.get('access_token')
+    w = Wunderlist(session.get('access_token'))
     w.check_list()
     # check if list exists
     # parse url
